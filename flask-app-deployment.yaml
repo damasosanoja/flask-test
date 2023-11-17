@@ -6,15 +6,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: test-app
+      app: flaskapi
   template:
     metadata:
       labels:
-        app: test-app
+        app: flaskapi
     spec:
       containers:
-      - name: test-app
+      - name: flaskapi
         image: damasosanoja/flask-api:latest
+        imagePullPolicy: IfNotPresent
         resources:
           limits:
             memory: "128Mi"
@@ -28,8 +29,9 @@ metadata:
   name: flask-app-service
 spec:
   selector:
-    app: flask-app-deployment
+    app: flaskapi
   ports:
   - port: 5000
+    protocol: TCP
     targetPort: 5000
   type: LoadBalancer
